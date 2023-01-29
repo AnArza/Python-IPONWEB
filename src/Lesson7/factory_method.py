@@ -34,14 +34,22 @@ class Cow(Animal):
         print("Muuuuu")
 
 
-c = Cow()
-print(c.animal_type)
-c.voice()
-print()
-t = Tiger()
-print(t.animal_type)
-t.voice()
-print()
-s = Snake()
-print(s.animal_type)
-s.voice()
+class AnimalFactory:
+    @staticmethod
+    def create_animal(animal):
+        if animal == "Tiger":
+            return Tiger()
+        if animal == "Snake":
+            return Snake()
+        if animal == "Cow":
+            return Cow()
+        raise AnimalError(f"{animal} is not animal")
+
+
+class AnimalError(Exception):
+    pass
+
+
+choice = input("What kind of animal do you wanna create?\n")
+animal = AnimalFactory.create_animal(choice)
+animal.voice()
