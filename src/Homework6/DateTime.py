@@ -169,7 +169,7 @@ class Time:
 
     @hour.setter
     def hour(self, h):
-        if type(h) != int:
+        if type(h) != int or not 0 <= h < 24:
             raise TimeError("Invalid hour")
         self.__hour = h
 
@@ -179,7 +179,7 @@ class Time:
 
     @minute.setter
     def minute(self, m):
-        if type(m) != int:
+        if type(m) != int or not 0 <= m < 60:
             raise TimeError("Invalid minute")
         self.__minute = m
 
@@ -189,7 +189,7 @@ class Time:
 
     @second.setter
     def second(self, s):
-        if type(s) != int:
+        if type(s) != int or not 0 <= s < 60:
             raise TimeError("Invalid second")
         self.__second = s
 
@@ -397,10 +397,9 @@ class DateTime:
         hours = m // 60
         mins = m - hours * 60
         self.sub_hour(hours)
-        self.__time.minute -= mins
-        if self.__time.minute < 0:
+        if self.__time.minute - mins < 0:
             self.sub_hour(1)
-        self.__time.minute %= 60
+        self.__time.minute = (self.__time.minute - mins) % 60
 
     def sub_second(self, s):
         if type(s) != int or s < 0:
@@ -408,10 +407,9 @@ class DateTime:
         mins = s // 60
         secs = s - mins * 60
         self.sub_minute(mins)
-        self.__time.second -= secs
-        if self.__time.second < 0:
+        if self.__time.second - secs < 0:
             self.sub_minute(1)
-        self.__time.second %= 60
+        self.__time.second = (self.__time.second - secs) % 60
 
     def __add__(self, other):
         first = copy.deepcopy(self)
