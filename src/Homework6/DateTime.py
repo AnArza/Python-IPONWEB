@@ -265,7 +265,7 @@ class DateTime:
         self.__time = time
 
     def __repr__(self):
-        return f"The date is {self.__date} and the time is {self.__time}."
+        return f"{self.__date} - {self.__time}."
 
     @property
     def date(self):
