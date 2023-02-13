@@ -130,8 +130,6 @@ dmypy.json
 
 
 # Django -- added by me
-**/migrations/**
-!**/migrations
-!**/migrations/__init__.py
-media/store/
+migrations/
+media/
 static/
