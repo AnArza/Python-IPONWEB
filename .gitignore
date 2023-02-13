@@ -133,3 +133,5 @@ dmypy.json
 migrations
 media
 static
+.gitignore
+
