@@ -130,6 +130,6 @@ dmypy.json
 
 
 # Django -- added by me
-migrations/
-media/
-static/
+migrations
+media
+static
