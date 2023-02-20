@@ -86,6 +86,9 @@ class MyBag(models.Model):
             total += item.price
         return total
 
+    def display_items(self):
+        return list(self.items.all())
+
 
 class Purchase(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -99,3 +102,6 @@ class Purchase(models.Model):
         for item in Item.objects.filter(purchase__id=self.id):
             total += item.price
         return total
+
+    def display_items(self):
+        return list(self.items.all())

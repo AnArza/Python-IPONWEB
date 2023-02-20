@@ -33,11 +33,11 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'total_price', 'buy_time', 'id')
+    list_display = ('customer', 'display_items', 'total_price', 'buy_time', 'id')
 
 
 class MyBagAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'total_price', 'id')
+    list_display = ('customer', 'display_items', 'total_price', 'id')
 
 
 admin.site.register(Customer, CustomerAdmin)
