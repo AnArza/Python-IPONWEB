@@ -81,11 +81,23 @@ class PurchaseView(View):
         except ObjectDoesNotExist:
             return failed_status("obj_not_found")
         if "customer_id" in data:
-            purchase.customer = Customer.objects.get(pk=data['customer'])
+            purchase.customer = Customer.objects.get(pk=data['customer_id'])
         if "item_ids" in data:
             items = Item.objects.filter(id__in=data['item_ids'])
-            purchase.items.clear()
-            for item in items:
-                purchase.items.add(item)
+            if len(data['item_ids']) == len(items):
+                saved_items = list(purchase.items.all())
+                purchase.items.clear()
+                for item in items:
+                    if item.quantity > 0:
+                        purchase.items.add(item)
+                        item.quantity -= 1
+                        item.save()
+                    else:
+                        for it in saved_items:
+                            purchase.items.add(it)
+                        item.save()
+                        return failed_status("No that much items")
+            else:
+                return failed_status("No object with that id")
         purchase.save()
         return ok_status()

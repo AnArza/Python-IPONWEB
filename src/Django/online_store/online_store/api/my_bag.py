@@ -76,8 +76,11 @@ class MyBagView(View):
             my_bag.customer = Customer.objects.get(pk=data['customer'])
         if "item_ids" in data:
             items = Item.objects.filter(id__in=data['item_ids'])
-            my_bag.items.clear()
-            for item in items:
-                my_bag.items.add(item)
+            if len(data['item_ids']) == len(items):
+                my_bag.items.clear()
+                for item in items:
+                    my_bag.items.add(item)
+            else:
+                return failed_status("No object with that id")
         my_bag.save()
         return ok_status()
